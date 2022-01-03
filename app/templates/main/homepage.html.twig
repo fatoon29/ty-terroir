@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Ty-terroir{% endblock %}
 
 {% block body %}
 <style>
@@ -8,13 +8,23 @@
     .example-wrapper code { padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Dev/Lumy/symfony_starter_kit/app/src/Controller/MainController.php'|file_link(0) }}">src/Controller/MainController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Dev/Lumy/symfony_starter_kit/app/templates/main/index.html.twig'|file_link(0) }}">templates/main/index.html.twig</a></code></li>
-    </ul>
-</div>
+<!--Section: Design Block-->
+<section>
+    <div id="intro" class="bg-image" style="
+        background-image: url('{{asset("build/assets/images/terroir.jpg")}}');
+        height: 93vh;
+      ">
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.2);">
+        <div class="container d-flex justify-content-center align-items-center h-100">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <h1 class="mb-0 text-white display-1">Ty Terroir</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--Section: Design Block-->
+</header>
 {% endblock %}

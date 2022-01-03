@@ -70,6 +70,9 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
+
+    .configureImageRule({filename: '[path][name].[ext]'})
+    .copyFiles([{context: './', from: './assets/images', to: '[path][name].[ext]'}])
 ;
 
 module.exports = Encore.getWebpackConfig();
