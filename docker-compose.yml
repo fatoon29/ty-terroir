@@ -30,26 +30,25 @@ services:
             - ./php/vhosts:/etc/apache2/sites-enabled
             - ./app:/var/www
         restart: always
-    # Uncomment to use Directus
-    # directus:
-    #     container_name: directus-${APP_NAME}
-    #     image: directus/directus:9.0.0-rc.99
-    #     ports:
-    #         - "8055:8055"
-    #     volumes:
-    #         - ./directus/uploads:/directus/uploads
-    #         - ./directus/extensions:/directus/extensions
-    #     depends_on:
-    #         - db
-    #     environment:
-    #         KEY: 'f0330228-9a78-4c27-9e87-fc5f9b49574d'
-    #         SECRET: 'CcnMDO7Olvoaqpi83cAoFlpYXb6FIsoS'
-    #         DB_CLIENT: 'mysql'
-    #         DB_HOST: 'db'
-    #         DB_PORT: '3306'
-    #         DB_DATABASE: ${DATABASE_NAME}
-    #         DB_USER: 'root'
-    #         DB_PASSWORD: ${DATABASE_PWD}
+    directus:
+        container_name: directus-${APP_NAME}
+        image: directus/directus:9.4.2
+        ports:
+            - "8055:8055"
+        volumes:
+            - ./directus/uploads:/directus/uploads
+            - ./directus/extensions:/directus/extensions
+        depends_on:
+            - db
+        environment:
+            KEY: 'f0330228-9a78-4c27-9e87-fc5f9b49574d'
+            SECRET: 'CcnMDO7Olvoaqpi83cAoFlpYXb6FIsoS'
+            DB_CLIENT: 'mysql'
+            DB_HOST: 'db'
+            DB_PORT: '3306'
+            DB_DATABASE: ${DATABASE_NAME}
+            DB_USER: 'root'
+            DB_PASSWORD: ${DATABASE_PWD}
 
 volumes:
     dev:
