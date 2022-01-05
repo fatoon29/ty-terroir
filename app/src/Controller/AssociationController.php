@@ -25,7 +25,9 @@ class AssociationController extends AbstractController
   
         $associations = [];
         foreach ($subscriptions as $subscription){
-            $association = $this->getDoctrine()->getRepository(Association::class)->findBy(['id' => $subscription->getAssociation()->getId()]); 
+            if($subscription->getStatus() == 'published'):
+                $association = $this->getDoctrine()->getRepository(Association::class)->findBy(['id' => $subscription->getAssociation()->getId()]); 
+            endif;
 
             array_push($associations, $association[0]);
         }
