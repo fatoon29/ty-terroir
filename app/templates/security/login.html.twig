@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<form method="post">
+    {% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+    <div class="mb-3">
+        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+    </div>
+    {% endif %}
+    <div class="container my-5">
+
+        <div class="my-5">
+
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col">
+                    <div class="card">
+                        <div class="row g-0">
+                            <div
+                                class="col-xl-5 col-lg-7 col-md-9 mx-auto text-center text-xl-start d-flex align-items-center">
+                                <div class="card-body p-4 p-md-5">
+                                    <form class="mx-md-4 px-md-3">
+                                        <img src="https://mdbcdn.b-cdn.net/wp-content/uploads/2018/06/logo-mdb-jquery-small.png"
+                                            alt="logo" />
+                                            Ty Terroir logo
+                                        <h2 class="mt-4 pt-1" style="font-weight: 900;">Connectez vous</h2>
+
+                                        <div class="form-outline mb-4">
+                                            <input type="email" value="{{ last_username }}" name="email" id="loginName1" class="form-control" />
+                                            <label class="form-label" for="loginName1">Email</label>
+                                          </div>
+
+                                          <div class="form-outline mb-4">
+                                            <input type="password" name="password" id="loginPassword1" class="form-control" />
+                                            <label class="form-label" for="loginPassword1">Mot de passe</label>
+                                          </div>
+
+                                        <input type="hidden" name="_csrf_token"
+                                            value="{{ csrf_token('authenticate') }}">
+
+
+                                        <!-- <div class="d-flex justify-content-between mb-4">
+                                            <div class="form-check mb-3 mb-md-0">
+                                                <input class="form-check-input" type="checkbox" name="_remember_me"
+                                                    id="loginCheck1" />
+                                                <label class="form-check-label" for="loginCheck1">Se souvenoir de moi</label>
+                                            </div>
+                                        </div> -->
+                                        <button type="submit" class="btn btn-primary btn-block">Connexion</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 d-none d-xl-block">
+                                <img src="{{ asset("build/assets/images/panier.jpg") }}"
+                                    alt="login form" class="w-100" style="border-radius: 0 0.5rem 0.5rem 0;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+        {% endblock %}
