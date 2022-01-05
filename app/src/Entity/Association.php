@@ -57,6 +57,13 @@ class Association
     private $street;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
+     */
+    private $slug;
+
+    /**
      * @var \City
      *
      * @ORM\ManyToOne(targetEntity="City")
@@ -139,6 +146,18 @@ class Association
     public function setCity(?City $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

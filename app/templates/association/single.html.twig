@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AssociationController!
+{% endblock %}
+
+{% block body %}
+
+	<h1 class="mt-5 mb-2 text-center">{{ association.name }}</h1>
+
+	<h3 class="text-center">Les prochaines distributions</h3>
+
+	<div class="mt-5 d-flex flex-column justify-content-center align-items-center">
+	{% for distribution in distributions %}
+		<div class="card mb-3">
+			<div class="card-body">
+				<h5 class="card-title"> Le {{distribution.date|format_datetime('full', 'short', locale='fr')}}</h5>
+				<p class="card-text">
+					{{distribution.site.name}}
+				</p>
+				<p class="card-text">
+					{{distribution.site.street}}
+				</p>
+				<p class="card-text">
+					{{distribution.site.city.name}}
+				</p>
+				<a href="#" class="btn btn-primary">Go somewhere</a>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+
+{% endblock %}
