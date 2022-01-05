@@ -73,6 +73,16 @@ class Association
      */
     private $city;
 
+    /**
+     * @var \DirectusFiles
+     *
+     * @ORM\ManyToOne(targetEntity="DirectusFiles")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="logo", referencedColumnName="id")
+     * })
+     */
+    private $logo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -162,5 +172,18 @@ class Association
         return $this;
     }
 
+    public function getLogo(): ?DirectusFiles
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(?DirectusFiles $logo): self
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    
 
 }
