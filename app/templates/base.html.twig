@@ -70,7 +70,7 @@
                 </a>
                 {% else %}
                 <a href="/login">
-                    <img src="{{ asset("build/assets/images/login.png") }}"  height="25" width="30
+                    <img src="{{ asset("build/assets/images/login.png") }}"  height="25" width="25"
                     alt="login" loading="lazy" />
                 </a>
                 {% endif %}
@@ -79,14 +79,14 @@
                 <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuLink"
                     role="button" data-mdb-toggle="dropdown" aria-expanded="false">
                     {% if app.user %}
-                    <img src="{{ 'http://localhost:8055/assets/' ~ app.user.avatar}}"  height="25"
+                    <img src="{{ 'http://localhost:8055/assets/' ~ app.user.avatar  ~ '?width=25&height=25'}}"  height="25"
                         alt="{{app.user.firstname}}" loading="lazy"  class="rounded-circle" />
                     {% endif %}   
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                     
                     <li>
-                        <a class="dropdown-item" href="#">My profile</a>
+                        <a class="dropdown-item" href="{{ path('user_profil') }}">My profile</a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="/logout">Logout</a>
