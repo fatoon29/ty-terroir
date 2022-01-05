@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AssociationController!
+{% block title %}{{ association.name }}
 {% endblock %}
 
 {% block body %}
@@ -11,6 +11,7 @@
 
 	<div class="mt-5 d-flex flex-column justify-content-center align-items-center">
 	{% for distribution in distributions %}
+	{% if distribution.status == 'published'%}
 		<div class="card mb-3">
 			<div class="card-body">
 				<h5 class="card-title"> Le {{distribution.date|format_datetime('full', 'short', locale='fr')}}</h5>
@@ -23,9 +24,12 @@
 				<p class="card-text">
 					{{distribution.site.city.name}}
 				</p>
-				<a href="#" class="btn btn-primary">Go somewhere</a>
+				<a href="{{ path('association_distribution', {id: distribution.id}) }}" class="btn btn-primary">Voir les producteurs présents</a>
 			</div>
 		</div>
+	{% else %}
+	<p>Pas de distribution prévue</p>
+	{% endif %}
 	{% endfor %}
 </div>
 

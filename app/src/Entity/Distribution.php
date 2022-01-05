@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -68,6 +70,16 @@ class Distribution
      * })
      */
     private $site;
+
+       /**
+     * @ORM\ManyToMany(targetEntity=Producer::class, inversedBy="distributions")
+     */
+    private $producers;
+
+    public function __construct()
+    {
+        $this->producers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -142,6 +154,30 @@ class Distribution
     public function setSite(?DistributionSite $site): self
     {
         $this->site = $site;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Producer[]
+     */
+    public function getProducers(): Collection
+    {
+        return $this->producers;
+    }
+
+    public function addProducer(Producer $producer): self
+    {
+        if (!$this->producers->contains($producer)) {
+            $this->producers[] = $producer;
+        }
+
+        return $this;
+    }
+
+    public function removeProducer(Producer $producer): self
+    {
+        $this->producers->removeElement($producer);
 
         return $this;
     }

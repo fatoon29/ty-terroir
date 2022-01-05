@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AssociationController!
+{% endblock %}
+
+{% block body %}
+
+	<h1 class="mt-5 text-center">Distribution du
+		{{distribution.date|format_datetime('full', 'short', locale='fr')}}</h1>
+	<h3 class="mt-3 mb-5 text-center">{{distribution.site.name}}</h3>
+
+	<div class="text-center">
+		<a href="#" class="btn btn-primary">Commander</a>
+	</div>
+
+	<div class="container my-5 p-5 shadow-5">
+		<div class="row row-cols-1 row-cols-md-3 g-4">
+			{% for producer in distribution.producers %}
+				<div class="col">
+					<div class="card">
+						<img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top" alt="Hollywood Sign on The Hill"/>
+						<div class="card-body">
+							<h5 class="card-title">{{ producer.legalStatus }}
+								{{ producer.name }}</h5>
+							<p class="card-text">
+								This is a longer card with supporting text below as a natural lead-in to
+														          additional content. This content is a little bit longer.
+							</p>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	
+{% endblock %}

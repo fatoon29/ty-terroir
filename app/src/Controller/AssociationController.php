@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Producer;
 use App\Entity\Association;
 use App\Entity\Distribution;
 use App\Entity\Subscription;
+use App\Entity\DistributionProducer;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -43,7 +45,6 @@ class AssociationController extends AbstractController
      */
     public function singleAssociation(Association $association): Response
     {
-
         $distributions = $this->getDoctrine()->getRepository(Distribution::class)->findBy(['association' => $association->getId()]); 
 
         return $this->render('association/single.html.twig', [
@@ -51,4 +52,16 @@ class AssociationController extends AbstractController
             'distributions' => $distributions
         ]);
     }
+
+    /**
+     * @Route("/distribution/{id}", name="distribution", methods={"GET"})
+     */
+    public function singleDistribution(Distribution $distribution): Response
+    {
+        return $this->render('association/distribution.html.twig', [
+            'distribution' => $distribution
+        ]);
+    }
+
+
 }

@@ -66,6 +66,7 @@ class DistributionSite
      */
     private $city;
 
+
     public function getId(): ?int
     {
         return $this->id;

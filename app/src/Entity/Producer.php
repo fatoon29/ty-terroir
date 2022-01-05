@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -103,6 +105,16 @@ class Producer
      * })
      */
     private $image;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Producer::class, inversedBy="producers")
+     */
+    private $distributions;
+
+    public function __construct()
+    {
+        $this->distributions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -237,6 +249,30 @@ class Producer
     public function setImage(?DirectusFiles $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Producer[]
+     */
+    public function getDistributions(): Collection
+    {
+        return $this->distributions;
+    }
+
+    public function addDistribution(Producer $distribution): self
+    {
+        if (!$this->distributions->contains($distribution)) {
+            $this->distributions[] = $distribution;
+        }
+
+        return $this;
+    }
+
+    public function removeDistribution(Producer $distribution): self
+    {
+        $this->distributions->removeElement($distribution);
 
         return $this;
     }
