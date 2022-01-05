@@ -58,3 +58,6 @@ Starter kit to build a symfony app based on symfony skeleton 😀
 - Symfony mailer
 - Symfony mailer -> Mailgun
 - Validator
+- Security
+- ORM Pack
+- Sensio/framework-extra-bundle
