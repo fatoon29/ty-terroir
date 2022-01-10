@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Order
  *
- * @ORM\Table(name="order", indexes={@ORM\Index(name="order_member_foreign", columns={"member"}), @ORM\Index(name="order_cart_foreign", columns={"cart"}), @ORM\Index(name="order_ditribution_foreign", columns={"ditribution"})})
+ * @ORM\Table(name="order_description", indexes={@ORM\Index(name="order_member_foreign", columns={"member"}), @ORM\Index(name="order_cart_foreign", columns={"cart"}), @ORM\Index(name="order_ditribution_foreign", columns={"ditribution"})})
  * @ORM\Entity
  */
-class Order
+class OrderDescription
 {
     /**
      * @var int
@@ -20,13 +20,6 @@ class Order
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="status", type="string", length=255, nullable=false, options={"default"="draft"})
-     */
-    private $status = 'draft';
 
     /**
      * @var \DateTime|null
@@ -45,7 +38,7 @@ class Order
     /**
      * @var string|null
      *
-     * @ORM\Column(name="total", type="decimal", precision=10, scale=5, nullable=true)
+     * @ORM\Column(name="total", type="decimal", precision=10, scale=5, nullable=true, nullable=true)
      */
     private $total;
 
@@ -74,26 +67,14 @@ class Order
      *
      * @ORM\ManyToOne(targetEntity="Distribution")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ditribution", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="distribution", referencedColumnName="id")
      * })
      */
-    private $ditribution;
+    private $distribution;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
-
-        return $this;
     }
 
     public function getDateCreated(): ?\DateTimeInterface
@@ -156,14 +137,14 @@ class Order
         return $this;
     }
 
-    public function getDitribution(): ?Distribution
+    public function getDistribution(): ?Distribution
     {
-        return $this->ditribution;
+        return $this->distribution;
     }
 
-    public function setDitribution(?Distribution $ditribution): self
+    public function setDistribution(?Distribution $distribution): self
     {
-        $this->ditribution = $ditribution;
+        $this->distribution = $distribution;
 
         return $this;
     }

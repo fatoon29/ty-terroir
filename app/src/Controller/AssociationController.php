@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Producer;
 use App\Entity\Association;
 use App\Entity\Distribution;
 use App\Entity\Subscription;
-use App\Entity\DistributionProducer;
+use App\Form\DistributionType;
+use App\Entity\OrderDescription;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -54,12 +55,36 @@ class AssociationController extends AbstractController
     }
 
     /**
-     * @Route("/distribution/{id}", name="distribution", methods={"GET"})
+     * @Route("/distribution/{id}", name="distribution")
      */
-    public function singleDistribution(Distribution $distribution): Response
-    {
+    public function singleDistribution(Distribution $distribution, Request $request): Response
+    {   
+        
+        $form = $this->createForm(DistributionType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()):
+
+            $userOrder = $this->getDoctrine()->getRepository(OrderDescription::class)->findBy(array('member' => $this->getUser(), 'distribution' => $distribution->getId()));
+
+            if($userOrder == null):
+            $order = new OrderDescription();
+            
+            $order->setDistribution($distribution);
+            $order->setMember($this->getUser());
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($order);
+            $entityManager->flush();
+            endif;
+
+            return $this->redirectToRoute('association_distribution', ['id' => $distribution->getId()]);
+
+        endif;
+
         return $this->render('association/distribution.html.twig', [
-            'distribution' => $distribution
+            'distribution' => $distribution,
+            'form' => $form->createView(),
         ]);
     }
 
