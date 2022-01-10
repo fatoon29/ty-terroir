@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Products
  *
  * @ORM\Table(name="products", indexes={@ORM\Index(name="products_image_foreign", columns={"image"}), @ORM\Index(name="products_category_foreign", columns={"category"}), @ORM\Index(name="products_certification_foreign", columns={"certification"}), @ORM\Index(name="products_producer_foreign", columns={"producer"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ProductsRepository")
  */
 class Products
 {

@@ -65,8 +65,7 @@ class AssociationController extends AbstractController
 
         if ($form->isSubmitted()):
 
-            $userOrder = $this->getDoctrine()->getRepository(OrderDescription::class)->findBy(array('member' => $this->getUser(), 'distribution' => $distribution->getId()));
-
+            $userOrder = $this->getDoctrine()->getRepository(OrderDescription::class)->findOneBy(array('member' => $this->getUser(), 'distribution' => $distribution->getId()));
             if($userOrder == null):
             $order = new OrderDescription();
             
@@ -76,9 +75,11 @@ class AssociationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($order);
             $entityManager->flush();
+            else:
+                $orderId = $userOrder->getId();
             endif;
 
-            return $this->redirectToRoute('association_distribution', ['id' => $distribution->getId()]);
+            return $this->redirectToRoute('product_list', ['distribution' => $distribution->getId()]);
 
         endif;
 
