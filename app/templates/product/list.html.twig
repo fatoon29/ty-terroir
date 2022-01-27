@@ -1,108 +1,127 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProductController!{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('product') }}
+{% endblock %}
+
+{% block title %}Hello ProductController!
+{% endblock %}
 
 {% block body %}
 
-<div class="example-wrapper">
-    <h1>Liste des produits  ✅</h1>
+	<div class="example-wrapper">
+		<h1>Liste des produits  ✅</h1>
 
-    <main>
-    <div class="container">
+		<main>
+			<div
+				class="container">
 
-      <!--Navbar-->
-      <nav class="navbar navbar-expand-lg  lighten-3 mt-3 mb-5">
+				<!--Navbar-->
+				<nav
+					class="navbar navbar-expand-lg  lighten-3 mt-3 mb-5">
 
-        <!-- Navbar brand -->
-        <span class="navbar-brand">Categories:</span>
+					<!-- Navbar brand -->
+					<span class="navbar-brand">Categories:</span>
 
-        <!-- Collapse button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
-          aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+					<!-- Collapse button -->
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
 
-        <!-- Collapsible content -->
-        <div class="collapse navbar-collapse" id="basicExampleNav">
+					<!-- Collapsible content -->
+					<div
+						class="collapse navbar-collapse" id="basicExampleNav">
 
-          <!-- Links -->
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#">All
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Shirts</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Sport wears</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Outwears</a>
-            </li>
+						<!-- Links -->
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item">
+								<a class="nav-link" href="#">Tout
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Fruits et légumes</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Viandes et charcuterie</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Produit de la mer</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Crèmerie</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Boulangerie</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Epicerie</a>
+							</li>
 
-          </ul>
-          <!-- Links -->
+						</ul>
+						<!-- Links -->
 
-          <form class="form-inline">
-            <div class="md-form my-0">
-              <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            </div>
-          </form>
-        </div>
-        <!-- Collapsible content -->
+						<form class="form-inline">
+							<div class="md-form my-0">
+								<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+							</div>
+						</form>
+					</div>
+					<!-- Collapsible content -->
 
-      </nav>
-      <!--/.Navbar-->
+				</nav>
+				<!--/.Navbar-->
 
-      <!--Section: Products v.3-->
-      <section class="text-center mb-4">
+				<!--Section: Products v.3-->
+				<section
+					class="text-center mb-4">
 
-        <!--Grid row-->
-        <div class="row wow fadeIn">
-        
-        {% for product in products%}
-          <!--Grid column-->
-          <div class="col-lg-2 col-md-6 col-sm-8 mb-4">
+					<!--Grid row-->
+					<div class="row wow fadeIn">
 
-            <!--Card-->
-            <div class="card">
+						{% for product in products%}
+							<!--Grid column-->
+							<div
+								class=" col-sm-8 col-md-6 col-lg-3 mb-3">
+								<!--Card-->
+								<div class="card {{product.category.name}}">
+									<img class="card-img" src="{{ 'http://localhost:8055/assets/' ~ product.image.id ~ '?width=400&height=400'}}" alt="{{product.name}}">
+									<div class="card-body">
+										<h4 class="card-title">{{product.name}}</h4>
+										<h6 class="card-subtitle mb-2 text-muted">{{product.producer.name}}</h6>
 
-              <!--Card image-->
-              <div class="view overlay">
-                <img src="{{ 'http://localhost:8055/assets/' ~ product.image.id ~ '?width=300&height=300'}}" class="card-img-top" alt="{{product.name}}">
-              </div>
-              <!--Card image-->
-
-              <!--Card content-->
-              <div class="card-body text-center">          
-                  <h5>{{product.producer.name}}</h5>
-                <h5>{{product.name}}</h5>
-
-                <h5>
-                  <strong>{{product.price|number_format(2)}} €</strong>
-                </h5>
-
-              </div>
-              <!--Card content-->
-
-            </div>
-            <!--Card-->
-
-          </div>
-          <!--Grid column-->
-        {% endfor %}
-
-        </div>
-        <!--Grid row-->
-
-
-      </section>
-      <!--Section: Products v.3-->
-
-          </div>
-  </main>
+                      <div class="price text-success text-cente">
+												<h5 class="mt-2">{{product.price|number_format(2)}}
+													€</h5>
+										</div>
+							<div class="d-flex flex-column justify-content-center align-items-center">
+											<div class="form-outline col-4 mb-2 text-center">
+												<input type="number" id="typeNumber" class="form-control" value="1" min="1"/>
+												<label class="form-label" for="typeNumber">Quantity</label>
+											</div>
+											<a href="#" class="btn btn-danger ">
+												<i class="fas fa-shopping-cart"></i>
+												Ajouter au panier</a>
+										</div>
+                    </div>
+								
+								</div>
+							</div>
+							<!--Grid column-->
+						{% endfor %}
+					</div>
+					<!--Grid row-->
+				</section>
+				<!--Section: Products v.3-->
+			</div>
+		</main>
 
 
-</div>
+	</div>
+
+	{% block javascripts %}
+		{{ parent() }}
+		{{ encore_entry_script_tags('product') }}
+	{% endblock %}
+
 {% endblock %}

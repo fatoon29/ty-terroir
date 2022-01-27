@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Producer;
 use App\Entity\Products;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Distribution;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,17 +17,34 @@ class ProductController extends AbstractController
     /**
      * @Route("/liste", name="list")
      */
-    public function index(EntityManagerInterface $em): Response
+    public function index(): Response
     {
         $distributionId = $_GET["distribution"];
+        $distribution = $this->getDoctrine()->getRepository(Distribution::class)->findOneBy(['id' => $distributionId]); 
 
-        // $products = $this->getDoctrine()->getRepository(Products::class)->findAll();
+        $productsArray = [];
+        $products = [];
 
-        $products = $em->getRepository(Products::class)->findProducts();
-        dd($products);
+        foreach($distribution->getProducers() as $producer):
+            $producerData = $this->getDoctrine()->getRepository(Producer::class)->findOneBy(['id' => $producer]); 
+            $product = $this->getDoctrine()->getRepository(Products::class)->findBy(['producer' => $producerData->getId()]); 
+            array_push($productsArray, $product);
+        endforeach;
+
+        foreach($productsArray as $product):
+            foreach($product as $p){
+                array_push($products, $p);
+            }
+        endforeach;
+
+        // $products = $em->getRepository(Products::class)->findProducts();
+        // dd($products);
 
         return $this->render('product/list.html.twig',[
             'products' => $products
         ]);
     }
+
+
+    
 }
