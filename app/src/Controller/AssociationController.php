@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\Association;
 use App\Entity\Distribution;
 use App\Entity\Subscription;
 use App\Form\DistributionType;
-use App\Entity\OrderDescription;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -65,19 +65,19 @@ class AssociationController extends AbstractController
 
         if ($form->isSubmitted()):
 
-            $userOrder = $this->getDoctrine()->getRepository(OrderDescription::class)->findOneBy(array('member' => $this->getUser(), 'distribution' => $distribution->getId()));
-            if($userOrder == null):
-            $order = new OrderDescription();
-            
-            $order->setDistribution($distribution);
-            $order->setMember($this->getUser());
-            
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($order);
-            $entityManager->flush();
-            else:
-                $orderId = $userOrder->getId();
-            endif;
+            // $userOrder = $this->getDoctrine()->getRepository(Order::class)->findOneBy(array('member' => $this->getUser(), 'distribution' => $distribution->getId()));
+            // if($userOrder == null):
+            //     $order = new Order();
+                
+            //     $order->setDistribution($distribution);
+            //     $order->setMember($this->getUser());
+                
+            //     $entityManager = $this->getDoctrine()->getManager();
+            //     $entityManager->persist($order);
+            //     $entityManager->flush();
+            //     else:
+            //         $orderId = $userOrder->getId();
+            // endif;
 
             return $this->redirectToRoute('product_list', ['distribution' => $distribution->getId()]);
 

@@ -2,15 +2,16 @@
 
 namespace App\Entity;
 
+use App\Entity\Distribution;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Order
  *
- * @ORM\Table(name="order_description", indexes={@ORM\Index(name="order_member_foreign", columns={"member"}), @ORM\Index(name="order_cart_foreign", columns={"cart"}), @ORM\Index(name="order_ditribution_foreign", columns={"ditribution"})})
+ * @ORM\Table(name="order", indexes={@ORM\Index(name="order_member_foreign", columns={"member"}), @ORM\Index(name="order_ditribution_foreign", columns={"ditribution"})})
  * @ORM\Entity
  */
-class OrderDescription
+class Order
 {
     /**
      * @var int
@@ -20,6 +21,13 @@ class OrderDescription
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=255, nullable=false, options={"default"="draft"})
+     */
+    private $status = 'draft';
 
     /**
      * @var \DateTime|null
@@ -38,29 +46,9 @@ class OrderDescription
     /**
      * @var string|null
      *
-     * @ORM\Column(name="total", type="decimal", precision=10, scale=5, nullable=true, nullable=true)
+     * @ORM\Column(name="total", type="decimal", precision=10, scale=5, nullable=true)
      */
     private $total;
-
-    /**
-     * @var \OrderProduct
-     *
-     * @ORM\ManyToOne(targetEntity="OrderProduct")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cart", referencedColumnName="id")
-     * })
-     */
-    private $cart;
-
-    /**
-     * @var \DirectusUsers
-     *
-     * @ORM\ManyToOne(targetEntity="DirectusUsers")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="member", referencedColumnName="id")
-     * })
-     */
-    private $member;
 
     /**
      * @var \Distribution
@@ -72,9 +60,31 @@ class OrderDescription
      */
     private $distribution;
 
+    /**
+     * @var \DirectusUsers
+     *
+     * @ORM\ManyToOne(targetEntity="DirectusUsers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="member", referencedColumnName="id")
+     * })
+     */
+    private $member;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
     }
 
     public function getDateCreated(): ?\DateTimeInterface
@@ -113,14 +123,14 @@ class OrderDescription
         return $this;
     }
 
-    public function getCart(): ?OrderProduct
+    public function getDistribution(): ?Distribution
     {
-        return $this->cart;
+        return $this->distribution;
     }
 
-    public function setCart(?OrderProduct $cart): self
+    public function setDistribution(?Distribution $distribution): self
     {
-        $this->cart = $cart;
+        $this->distribution = $distribution;
 
         return $this;
     }
@@ -133,18 +143,6 @@ class OrderDescription
     public function setMember(?DirectusUsers $member): self
     {
         $this->member = $member;
-
-        return $this;
-    }
-
-    public function getDistribution(): ?Distribution
-    {
-        return $this->distribution;
-    }
-
-    public function setDistribution(?Distribution $distribution): self
-    {
-        $this->distribution = $distribution;
 
         return $this;
     }
